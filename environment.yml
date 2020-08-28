@@ -1,0 +1,10 @@
+name: password-manager
+channels:
+- defaults
+dependencies:
+- python
+- notebook
+- numpy
+- pandas
+- pycrypto
+- setuptools
