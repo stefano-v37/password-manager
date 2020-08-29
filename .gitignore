@@ -1,5 +1,10 @@
 #custom
-develop/
+backup/*
+!backup/.gitkeep
+develop/*
+!develop/.gitkeep
+output/*
+!output/.gitkeep
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
