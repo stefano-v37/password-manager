@@ -1,24 +1,33 @@
 import os
+from datetime import datetime
 import pandas as pd
 
-from PasswordManager.utilities import crypt, uncrypt
+from PasswordManager.utilities import crypt, uncrypt, get_configuration
+from PasswordManager.utilities import THIS_DIR
 
 
 class Instance:
     def __init__(self, path=None):
+        path_std, columns_std, name_std = get_configuration()
         if path:
-            self.path = path
+            if path == 'this':
+                self.path = '\\'.join([str(x) for x in THIS_DIR.split('\\')][:-1]) + '\\output'
+            else:
+                self.path = path
         else:
-            this_dir = os.path.dirname(os.path.realpath(__file__))
-            self.path = '\\'.join([str(x) for x in this_dir.split('\\')][:-1]) + '\\output'
+            if path_std:
+                self.path = path_std
+            else:
+                self.path = '\\'.join([str(x) for x in THIS_DIR.split('\\')][:-1]) + '\\output'
 
-        self.new = not 'password_list' in os.listdir(self.path)
-        self.link = self.path + '//' + 'password_list'
+        self.new = not name_std in os.listdir(self.path)
+        self.link = self.path + '//' + name_std
         if self.new:
-            self.data = pd.DataFrame(columns=['Date', 'Site/Provider', 'Username', 'Password'])
+            self.data = pd.DataFrame(columns=columns_std)
         else:
             self.data = pd.read_pickle(self.link)
         self.data['Date'] = pd.to_datetime(self.data.Date)
+        self.update_df()
 
     def add_data(self, date, provider, user, psw, key_generator_phrase, **kwargs):
         success = False
@@ -29,23 +38,27 @@ class Instance:
             if kwargs.pop('force_writing', False):
                 self.data = self.data.append(new_line, ignore_index=True)
                 success = True
+                force_flag = True
         else:
             self.data = self.data.append(new_line, ignore_index=True)
             success = True
+            force_flag = False
         if success:
-            print(str(pd.DataFrame(self.data.iloc[-1])) + '\n' + 'has been written in the db, please save to store the data')
+            self.update_df()
+            if not force_flag:
+                print(str(pd.DataFrame(self.data.iloc[-1])) + '\n' + 'has been written in the df, please save to store the data')
 
     def check_duplicates(self, new_line):
         check = [y for _,y in new_line.items() if _ != 'Password']
         line_counter = 0
         duplicates = []
-        for x in self.data[[x for x in self.data.columns if x != 'Password']].values:
+        for x in self.data[[x for x in self.data.columns if x not in ['Password', 'Age']]].values:
             flag = set(x) == set(check)
             if flag:
                 duplicates.extend([line_counter])
             line_counter += 1
         if duplicates:
-            print('Values already present in db, check below (use **kwargs to force the writing)')
+            print('Values already present in df, check below (use **kwargs to force the writing)')
             print(self.data.loc[self.data.index.isin(duplicates)])
 
         if duplicates:
@@ -59,5 +72,9 @@ class Instance:
             lambda row: uncrypt(row, key_generator_phrase, iv_generator_phrase))
         return selection
 
-    def save_db(self):
+    def update_df(self):
+        self.data['Age'] = datetime.now() - self.data['Date']
+        self.data['Age'] = self.data.Age.dt.days.astype(str) + ' ' + (self.data.Age.dt.days == 1).replace([True, False], ['day', 'days'])
+
+    def save_df(self):
         self.data.to_pickle(self.link)

@@ -1,6 +1,10 @@
+import os
+
 from Crypto.Cipher import AES
 from Crypto.Hash import SHA256
+import yaml
 
+THIS_DIR = os.path.dirname(os.path.realpath(__file__))
 
 def generate_hash(generator_str, bits):
     if (bits <= 32) & (bits > 0) & (type(bits) is int):
@@ -30,3 +34,13 @@ def uncrypt(psw_crypted, key_generator_phrase, iv_generator_phrase=None):
     psw = obj2.decrypt(ciphertext).decode('utf-8')
 
     return psw
+
+
+def get_configuration():
+    conf_path = THIS_DIR + '\\configuration.yml'
+    with open(conf_path) as configuration:
+        configuration = yaml.safe_load(configuration)
+        path = configuration['output_path']
+        columns = configuration['columns']
+        name = configuration['name']
+    return path, columns, name
