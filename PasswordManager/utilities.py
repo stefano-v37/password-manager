@@ -31,7 +31,10 @@ def uncrypt(psw_crypted, key_generator_phrase, iv_generator_phrase=None):
     iv = generate_hash(iv_generator_phrase, 16)
 
     obj2 = AES.new(key, AES.MODE_CFB, iv)
-    psw = obj2.decrypt(ciphertext).decode('utf-8')
+    try:
+        psw = obj2.decrypt(ciphertext).decode('utf-8')
+    except UnicodeDecodeError as e:
+        psw = e
 
     return psw
 
