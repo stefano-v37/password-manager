@@ -72,6 +72,12 @@ class Instance:
             lambda row: uncrypt(row, key_generator_phrase, iv_generator_phrase))
         return selection
 
+    def get_all_df(self, key_generator_phrase, iv_generator_phrase=None):
+        temp = self.data.copy()
+        for provider in self.data['Site/Provider'].unique():
+            temp.loc[temp['Site/Provider'] == provider] = self.get_psw(provider, key_generator_phrase, iv_generator_phrase)
+        return temp
+
     def update_df(self):
         self.data['Age'] = datetime.now() - self.data['Date']
         self.data['Age'] = self.data.Age.dt.days.astype(str) + ' ' + (self.data.Age.dt.days == 1).replace([True, False], ['day', 'days'])
