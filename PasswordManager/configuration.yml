@@ -1,4 +1,4 @@
-output_path :
+output_path : 'pswdb'
 columns : ['Date', 'Site/Provider', 'Username', 'Password']
 name : 'password_list'
 backup_saves : 10
