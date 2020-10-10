@@ -16,6 +16,12 @@ Finally, this repository can be installed as a (editable) package (named _Passwo
 
 ### Notes
 
-Please, change "configuration.yml" path key to match the desired output folder. For example:
+Please, modify "configuration.yml" path key to match the desired output folder.
+This value is supposed to match a system environment variable containing the desired folder
+For example:
 
-`path : C:\Users\"username"\Documents\folder`
+`path : pswdb`
+
+Where ` echo %pswdb%` (Windows cmd) is:
+
+`C:\Users\"username"\Documents\folder`

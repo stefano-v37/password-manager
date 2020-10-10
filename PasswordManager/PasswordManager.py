@@ -2,8 +2,8 @@ import os
 from datetime import datetime
 import pandas as pd
 
-from PasswordManager.utilities import crypt, uncrypt, get_configuration
-from PasswordManager.utilities import THIS_DIR
+from .utilities import crypt, uncrypt, get_configuration
+from .utilities import THIS_DIR
 
 
 class Instance:
@@ -15,8 +15,9 @@ class Instance:
             else:
                 self.path = path
         else:
+            print(os.environ.get(path_std))
             if path_std:
-                self.path = path_std
+                self.path = os.environ.get(path_std)
             else:
                 self.path = '\\'.join([str(x) for x in THIS_DIR.split('\\')][:-1]) + '\\output'
 
