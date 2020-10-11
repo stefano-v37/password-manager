@@ -2,13 +2,14 @@ import os
 from datetime import datetime
 import pandas as pd
 
-from .utilities import crypt, uncrypt, get_configuration
+from .utilities import crypt, uncrypt, get_configuration_entries
 from .utilities import THIS_DIR
 
 
 class Instance:
-    def __init__(self, path=None):
-        path_std, columns_std, name_std = get_configuration()
+    def __init__(self, path=None, user='default'):
+        self.user = user
+        path_std, columns_std, name_std = get_configuration_entries(self.user)
         if path:
             if path == 'this':
                 self.path = '\\'.join([str(x) for x in THIS_DIR.split('\\')][:-1]) + '\\output'

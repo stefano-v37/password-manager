@@ -39,12 +39,15 @@ def uncrypt(psw_crypted, key_generator_phrase, iv_generator_phrase=None):
 
     return psw
 
-
 def get_configuration():
     conf_path = THIS_DIR + '\\configuration.yml'
     with open(conf_path) as configuration:
         configuration = yaml.safe_load(configuration)
-        path = configuration['output_path']
-        columns = configuration['columns']
-        name = configuration['name']
+    return configuration
+
+def get_configuration_entries(user='default'):
+    configuration = get_configuration()
+    path = configuration['output_path'][user]
+    columns = configuration['columns']
+    name = configuration['name']
     return path, columns, name
