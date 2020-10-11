@@ -20,7 +20,7 @@
       <x>0</x>
       <y>100</y>
       <width>800</width>
-      <height>800</height>
+      <height>500</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -36,8 +36,116 @@
         <x>0</x>
         <y>0</y>
         <width>800</width>
-        <height>400</height>
+        <height>331</height>
        </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelDeleteRow">
+      <property name="geometry">
+       <rect>
+        <x>600</x>
+        <y>340</y>
+        <width>101</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Delete row number:</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="deleteRowInput">
+      <property name="geometry">
+       <rect>
+        <x>710</x>
+        <y>340</y>
+        <width>41</width>
+        <height>21</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonDeleteRow">
+      <property name="geometry">
+       <rect>
+        <x>760</x>
+        <y>340</y>
+        <width>21</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Ok</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonSaveData">
+      <property name="geometry">
+       <rect>
+        <x>694</x>
+        <y>410</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Save changes</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEditSendKey">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>350</y>
+        <width>113</width>
+        <height>20</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEditSendIv">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>380</y>
+        <width>113</width>
+        <height>20</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelSendKey">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>350</y>
+        <width>21</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Key</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelSendIv">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>380</y>
+        <width>21</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Iv</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonDecrypt">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>410</y>
+        <width>51</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Decrypt</string>
       </property>
      </widget>
     </widget>
@@ -56,6 +164,186 @@
       </property>
       <property name="text">
        <string>PushButton</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="inputProvider">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>70</y>
+        <width>241</width>
+        <height>20</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="inputUsr">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>110</y>
+        <width>241</width>
+        <height>20</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="inputPsw">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>150</y>
+        <width>241</width>
+        <height>20</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="inputKey">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>190</y>
+        <width>241</width>
+        <height>20</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="inputIv">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>230</y>
+        <width>241</width>
+        <height>20</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelProvider">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>70</y>
+        <width>81</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Provider:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelUsername">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>110</y>
+        <width>81</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Username:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelPassword">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>150</y>
+        <width>81</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Password:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelKey">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>190</y>
+        <width>81</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Encrypting key:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelIv">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>230</y>
+        <width>81</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Encrypting iv:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label">
+      <property name="geometry">
+       <rect>
+        <x>370</x>
+        <y>70</y>
+        <width>16</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>*</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>370</x>
+        <y>110</y>
+        <width>16</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>*</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>370</x>
+        <y>150</y>
+        <width>16</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>*</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_4">
+      <property name="geometry">
+       <rect>
+        <x>370</x>
+        <y>190</y>
+        <width>16</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>*</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_5">
+      <property name="geometry">
+       <rect>
+        <x>560</x>
+        <y>340</y>
+        <width>91</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>* Mandatory field</string>
       </property>
      </widget>
     </widget>

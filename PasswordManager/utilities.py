@@ -27,7 +27,8 @@ def uncrypt(psw_crypted, key_generator_phrase, iv_generator_phrase=None):
     ciphertext = psw_crypted
     key = generate_hash(key_generator_phrase, 32)
     if not iv_generator_phrase:
-        iv_generator_phrase = key_generator_phrase
+        if not iv_generator_phrase == "":
+            iv_generator_phrase = key_generator_phrase
     iv = generate_hash(iv_generator_phrase, 16)
 
     obj2 = AES.new(key, AES.MODE_CFB, iv)

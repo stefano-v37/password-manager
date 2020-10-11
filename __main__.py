@@ -9,10 +9,11 @@ if __name__ == "__main__":
 
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
-    ui = extendedMainWindow(MainWindow)
+
 
     instance = Instance()
-    ui.setData(instance.data)
+
+    ui = extendedMainWindow(MainWindow, instance)
 
 
     MainWindow.show()

@@ -49,6 +49,15 @@ class Instance:
             if not force_flag:
                 print(str(pd.DataFrame(self.data.iloc[-1])) + '\n' + 'has been written in the df, please save to store the data')
 
+    def delete_row(self, numbers):
+        if type(numbers) == list:
+            for number in numbers:
+                self.data = self.data.loc[self.data.index != number]
+        elif type(numbers) == int:
+            number = numbers
+            self.data = self.data.loc[self.data.index != number]
+        self.data.reset_index(drop=True, inplace=True)
+
     def check_duplicates(self, new_line):
         check = [y for _,y in new_line.items() if _ != 'Password']
         line_counter = 0
@@ -75,6 +84,8 @@ class Instance:
 
     def get_all_df(self, key_generator_phrase, iv_generator_phrase=None):
         temp = self.data.copy()
+        if iv_generator_phrase == "":
+            iv_generator_phrase = None
         for provider in self.data['Site/Provider'].unique():
             temp.loc[temp['Site/Provider'] == provider] = self.get_psw(provider, key_generator_phrase, iv_generator_phrase)
         return temp
