@@ -14,14 +14,19 @@ Finally, this repository can be installed as a (editable) package (named _Passwo
 
 `python setup.py develop`
 
-### Notes
+### How-to
 
-Please, modify "configuration.yml" path key to match the desired output folder.
-This value is supposed to match a system environment variable containing the desired folder
+Please, modify "configuration.yml" to add the desired users and a related key.
+This key is supposed to match a system environment variable containing the desired folder
 For example:
 
-`path : pswdb`
+`path : `
+`   default : pswdb`
+`   user1 : env1`
+`   user2 : env2`
 
 Where ` echo %pswdb%` (Windows cmd) is:
 
 `C:\Users\"username"\Documents\folder`
+
+At the moment a default key is needed for the functionalities of the app.
