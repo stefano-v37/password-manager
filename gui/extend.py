@@ -70,7 +70,6 @@ class extendedMainWindow(Ui_MainWindow):
 
     def setData(self, data=None):
         if type(data) == DataFrame:
-            print('ok')
             model = PandasModel(data)
         else:
             model = PandasModel(self.instance.data)

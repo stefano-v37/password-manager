@@ -16,7 +16,6 @@ class Instance:
             else:
                 self.path = path
         else:
-            print(os.environ.get(path_std))
             if path_std:
                 self.path = os.environ.get(path_std)
             else:
