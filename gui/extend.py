@@ -1,4 +1,3 @@
-import pandas
 from PyQt5 import QtCore
 from pandas import DataFrame
 
@@ -15,23 +14,20 @@ class extendedMainWindow(Ui_MainWindow):
         self.setupUi(mainWindow)
         self.users = get_configuration()['output_path']
         self.__extend__()
-        self.instance = instance
-        self.setData()
+        self.setUser(instance)
 
-        self.userList.activated.connect(self.changeUser)
-        self.insertDataButton.clicked.connect(self.insertdataclick)
-        self.pushButtonDeleteRow.clicked.connect(self.deletedataclick)
-        self.pushButtonSaveData.clicked.connect(self.instance.save_df)
-        self.pushButtonDecrypt.clicked.connect(self.decryptdataclick)
-
-        self.refreshUser()
-
-    def switchUser(self, user):
-        self.instance = Instance(user=user)
+    def setUser(self, init):
+        if isinstance(init, Instance):
+            self.instance = init
+        elif isinstance(init, str):
+            self.instance = Instance(user=init)
+        else:
+            print("provide a proper initialization")
         self.refresh()
 
     def changeUser(self):
-        self.switchUser(self.userList.currentText())
+        print("current user is: " + self.userList.currentText())
+        self.setUser(self.userList.currentText())
 
     def insertdataclick(self):
         self.instance.add_data(date=dt.now(),
@@ -60,13 +56,36 @@ class extendedMainWindow(Ui_MainWindow):
         temp = self.instance.get_all_df(self.lineEditSendKey.text(), self.lineEditSendIv.text())
         self.refresh(temp)
 
-    def refresh(self, data = None):
+    def refresh(self, data=None):
         self.setData(data)
+        self.refreshUser()
 
     def refreshUser(self):
         _translate = QtCore.QCoreApplication.translate
-        self.path.setText(_translate("MainWindow", self.instance.path))
+        self.path.setText(_translate("MainWindow", self.instance.link))
         self.userList.setCurrentIndex(list(self.users).index(self.instance.user))
+
+        try:
+            self.disconnectActions()
+            self.connectActions()
+
+        except TypeError as te:
+            print(te)
+            self.connectActions()
+
+    def disconnectActions(self):
+        self.userList.disconnect()
+        self.insertDataButton.disconnect()
+        self.pushButtonDeleteRow.disconnect()
+        self.pushButtonSaveData.disconnect()
+        self.pushButtonDecrypt.disconnect()
+
+    def connectActions(self):
+        self.userList.activated.connect(self.changeUser)
+        self.insertDataButton.clicked.connect(self.insertdataclick)
+        self.pushButtonDeleteRow.clicked.connect(self.deletedataclick)
+        self.pushButtonSaveData.clicked.connect(self.instance.save_df)
+        self.pushButtonDecrypt.clicked.connect(self.decryptdataclick)
 
     def setData(self, data=None):
         if type(data) == DataFrame:
@@ -76,15 +95,18 @@ class extendedMainWindow(Ui_MainWindow):
         self.tabWidget.setCurrentIndex(0)
         self.cryptedPswView.setModel(model)
 
-
     def __extend__(self):
         _translate = QtCore.QCoreApplication.translate
 
+        # tab0
         self.userList.addItems(self.users.keys())
 
+        # ! tab 1
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab1), _translate("MainWindow", "Password"))
-        self.insertDataButton.setText(_translate("MainWindow", "Invia"))
+        self.insertDataButton.setText(_translate("MainWindow", "Send"))
 
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab2), _translate("MainWindow", "Aggiungi password"))
+        # !! tab2
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab2), _translate("MainWindow", "Add password"))
 
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab3), _translate("MainWindow", "Genera password"))
+        # !!! tab3
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab3), _translate("MainWindow", "Generate password"))

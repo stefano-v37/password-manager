@@ -21,8 +21,9 @@ class Instance:
             else:
                 self.path = '\\'.join([str(x) for x in THIS_DIR.split('\\')][:-1]) + '\\output'
 
+        print(self.path)
         self.new = not name_std in os.listdir(self.path)
-        self.link = self.path + '//' + name_std
+        self.link = self.path + '\\' + name_std
         if self.new:
             self.data = pd.DataFrame(columns=columns_std)
         else:
@@ -95,4 +96,5 @@ class Instance:
         self.data['Age'] = self.data.Age.dt.days.astype(str) + ' ' + (self.data.Age.dt.days == 1).replace([True, False], ['day', 'days'])
 
     def save_df(self):
+        print("DF saved")
         self.data.to_pickle(self.link)
