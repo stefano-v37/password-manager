@@ -21,7 +21,6 @@ class Instance:
             else:
                 self.path = '\\'.join([str(x) for x in THIS_DIR.split('\\')][:-1]) + '\\output'
 
-        print(self.path)
         self.new = not name_std in os.listdir(self.path)
         self.link = self.path + '\\' + name_std
         if self.new:
@@ -70,7 +69,6 @@ class Instance:
             line_counter += 1
         if duplicates:
             print('Values already present in df, check below (use **kwargs to force the writing)')
-            print(self.data.loc[self.data.index.isin(duplicates)])
 
         if duplicates:
             return True
