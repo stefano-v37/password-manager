@@ -1,8 +1,8 @@
 # password-manager
 Password manager to store encrypted passwords.
 
-### Installation
-The repository is supposed to run with packages listed in ".\environment.yml". I suggest using conda commands (from Anaconda or Miniconda) in shell:
+### 1. Installation
+The repository has been developed with packages listed in ".\environment.yml". These assure the stability of the module and I suggest using conda commands (from Anaconda or Miniconda) in shell:
 
 ```
 conda env create path-to-package\environment.yml`
@@ -14,14 +14,21 @@ In case of further commits requiring different packages (not expected), you can 
 conda activate password-manager
 conda env update path-to-package\environment.yml
 ```
+(Probably, the module could still be working even with different version of the packages)
 
-Finally, this repository can be installed as a (editable) package (named _PasswordManager_) using setuptools:
+Finally, this repository can be installed as a package (named _PasswordManager_) using setuptools:
 
 ```
-python setup.py develop
+python path-to-package/setup.py
 ```
 
-### How-to
+Eventually, as an editable package:
+
+```
+python path-to-package/setup.py develop
+```
+
+### 2. Configuration
 
 Please, modify "configuration.yml" to add the desired users and related keys.
 Thos keys are supposed to match system environment variables linking to the desired folder.
@@ -42,3 +49,11 @@ C:\Users\"username"\Documents\folder
 ```
 
 At the moment a default key is needed for the functionalities of the app.
+
+### 3. Execution
+
+To run the module you can import the package and use its methods but I suggest using the gui by executing the `__main__.py` file:
+
+```
+python -m PasswordManager
+```
