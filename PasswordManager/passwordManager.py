@@ -2,13 +2,14 @@ import os
 from datetime import datetime
 import pandas as pd
 
-from .utilities import crypt, uncrypt, get_configuration
+from .utilities import crypt, uncrypt, get_configuration_entries
 from .utilities import THIS_DIR
 
 
 class Instance:
-    def __init__(self, path=None):
-        path_std, columns_std, name_std = get_configuration()
+    def __init__(self, path=None, user='default'):
+        self.user = user
+        path_std, columns_std, name_std = get_configuration_entries(self.user)
         if path:
             if path == 'this':
                 self.path = '\\'.join([str(x) for x in THIS_DIR.split('\\')][:-1]) + '\\output'
@@ -21,7 +22,7 @@ class Instance:
                 self.path = '\\'.join([str(x) for x in THIS_DIR.split('\\')][:-1]) + '\\output'
 
         self.new = not name_std in os.listdir(self.path)
-        self.link = self.path + '//' + name_std
+        self.link = self.path + '\\' + name_std
         if self.new:
             self.data = pd.DataFrame(columns=columns_std)
         else:
@@ -48,6 +49,15 @@ class Instance:
             if not force_flag:
                 print(str(pd.DataFrame(self.data.iloc[-1])) + '\n' + 'has been written in the df, please save to store the data')
 
+    def delete_row(self, numbers):
+        if type(numbers) == list:
+            for number in numbers:
+                self.data = self.data.loc[self.data.index != number]
+        elif type(numbers) == int:
+            number = numbers
+            self.data = self.data.loc[self.data.index != number]
+        self.data.reset_index(drop=True, inplace=True)
+
     def check_duplicates(self, new_line):
         check = [y for _,y in new_line.items() if _ != 'Password']
         line_counter = 0
@@ -59,7 +69,6 @@ class Instance:
             line_counter += 1
         if duplicates:
             print('Values already present in df, check below (use **kwargs to force the writing)')
-            print(self.data.loc[self.data.index.isin(duplicates)])
 
         if duplicates:
             return True
@@ -74,6 +83,8 @@ class Instance:
 
     def get_all_df(self, key_generator_phrase, iv_generator_phrase=None):
         temp = self.data.copy()
+        if iv_generator_phrase == "":
+            iv_generator_phrase = None
         for provider in self.data['Site/Provider'].unique():
             temp.loc[temp['Site/Provider'] == provider] = self.get_psw(provider, key_generator_phrase, iv_generator_phrase)
         return temp
@@ -83,4 +94,5 @@ class Instance:
         self.data['Age'] = self.data.Age.dt.days.astype(str) + ' ' + (self.data.Age.dt.days == 1).replace([True, False], ['day', 'days'])
 
     def save_df(self):
+        print("DF saved")
         self.data.to_pickle(self.link)
