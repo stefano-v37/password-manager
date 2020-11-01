@@ -1,5 +1,6 @@
 output_path :
   default : 'pswdb'
+  stefano : 'pswdbStefano'
 columns : ['Date', 'Site/Provider', 'Username', 'Password']
 name : 'password_list'
 backup_saves : 10
