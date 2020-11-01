@@ -6,6 +6,7 @@ develop/*
 output/*
 !output/.gitkeep
 PasswordManager/configuration.yml
+.idea
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
